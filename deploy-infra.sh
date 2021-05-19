@@ -2,13 +2,13 @@
 
 STACK_NAME=awsbootstrap
 REGION=us-east-1
-CLI_PROFILE=awsbootstrap
+CLI_PROFILE=AFDK-MASTER
 
 EC2_INSTANCE_TYPE=t2.micro
-DOMAIN=the-good-parts.com
-CERT=`aws acm list-certificates --region $REGION --profile awsbootstrap --output text \
+DOMAIN=amegaxoxo.com
+CERT=`aws acm list-certificates --region $REGION --profile $CLI_PROFILE --output text \
         --query "CertificateSummaryList[?DomainName=='$DOMAIN'].CertificateArn | [0]"`
-AWS_ACCOUNT_ID=`aws sts get-caller-identity --profile awsbootstrap \
+AWS_ACCOUNT_ID=`aws sts get-caller-identity --profile $CLI_PROFILE \
         --query "Account" --output text`
 CODEPIPELINE_BUCKET="$STACK_NAME-$REGION-codepipeline-$AWS_ACCOUNT_ID"
 CFN_BUCKET="$STACK_NAME-cfn-$AWS_ACCOUNT_ID"
@@ -72,6 +72,6 @@ aws cloudformation deploy \
 # If the deploy succeeded, show the DNS name of the endpoints
 if [ $? -eq 0 ]; then
   aws cloudformation list-exports \
-    --profile awsbootstrap \
+    --profile $CLI_PROFILE \
     --query "Exports[?ends_with(Name,'LBEndpoint')].Value"
 fi

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CLI_PROFILE=awsbootstrap
+CLI_PROFILE=AFDK-MASTER
 
 # Validate the CloudFormation template
 aws cloudformation validate-template \
